@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Concreto - Gratis</title>
+  <meta name="description" content="Calcula fácilmente la cantidad de materiales y el costo para preparar concreto con esta calculadora en línea gratuita.">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-6">
+
+  <header class="mb-6 text-center">
+    <h1 class="text-3xl font-bold text-gray-800">🧱 Calculadora de Concreto</h1>
+    <p class="text-gray-600">Calcula materiales y costos en segundos</p>
+  </header>
+
+  <!-- Bloque de anuncio -->
+  <div class="my-4 w-full max-w-2xl text-center">
+    <p class="text-sm text-gray-500 mb-2">Publicidad</p>
+    <div class="border rounded-lg bg-white p-4 shadow">
+      <!-- Aquí pegas el código de Google AdSense -->
+      <p class="text-gray-400 italic">[Espacio para anuncio]</p>
+    </div>
+  </div>
+
+  <!-- Formulario de entrada -->
+  <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-2xl">
+    <h2 class="text-xl font-semibold mb-4">Datos del Concreto</h2>
+
+    <label class="block mb-3">
+      <span class="text-gray-700">Cantidad de concreto (m³):</span>
+      <input id="volumen" type="number" step="0.01" class="mt-1 w-full p-2 border rounded-lg" placeholder="Ej: 2.5">
+    </label>
+
+    <h2 class="text-xl font-semibold mt-6 mb-4">Precios por unidad</h2>
+
+    <div class="grid grid-cols-2 gap-4">
+      <label>
+        <span class="text-gray-700">Cemento (bolsa 50kg):</span>
+        <input id="precioCemento" type="number" class="mt-1 w-full p-2 border rounded-lg" placeholder="Ej: 30000">
+      </label>
+      <label>
+        <span class="text-gray-700">Arena (m³):</span>
+        <input id="precioArena" type="number" class="mt-1 w-full p-2 border rounded-lg" placeholder="Ej: 60000">
+      </label>
+      <label>
+        <span class="text-gray-700">Grava (m³):</span>
+        <input id="precioGrava" type="number" class="mt-1 w-full p-2 border rounded-lg" placeholder="Ej: 50000">
+      </label>
+      <label>
+        <span class="text-gray-700">Agua (litro):</span>
+        <input id="precioAgua" type="number" class="mt-1 w-full p-2 border rounded-lg" placeholder="Ej: 100">
+      </label>
+    </div>
+
+    <button onclick="calcular()" class="mt-6 w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700">
+      Calcular
+    </button>
+  </div>
+
+  <!-- Resultados -->
+  <div id="resultados" class="mt-6 bg-white shadow-lg rounded-2xl p-6 w-full max-w-2xl hidden">
+    <h2 class="text-xl font-semibold mb-4">Resultados</h2>
+    <ul class="space-y-2 text-gray-700" id="materiales"></ul>
+    <p class="mt-4 text-lg font-bold text-green-600" id="costoTotal"></p>
+  </div>
+
+  <script>
+    function calcular() {
+      const volumen = parseFloat(document.getElementById('volumen').value);
+
+      if (isNaN(volumen) || volumen <= 0) {
+        alert("Por favor, ingresa un volumen válido.");
+        return;
+      }
+
+      // Relación (ejemplo típica para 1 m³ de concreto)
+      const cemento = 7 * volumen; // bolsas
+      const arena = 0.5 * volumen; // m³
+      const grava = 0.75 * volumen; // m³
+      const agua = 180 * volumen; // litros
+
+      // Precios ingresados
+      const precioCemento = parseFloat(document.getElementById('precioCemento').value) || 0;
+      const precioArena = parseFloat(document.getElementById('precioArena').value) || 0;
+      const precioGrava = parseFloat(document.getElementById('precioGrava').value) || 0;
+      const precioAgua = parseFloat(document.getElementById('precioAgua').value) || 0;
+
+      // Cálculo de costos
+      const costoCemento = cemento * precioCemento;
+      const costoArena = arena * precioArena;
+      const costoGrava = grava * precioGrava;
+      const costoAgua = agua * precioAgua;
+      const costoTotal = costoCemento + costoArena + costoGrava + costoAgua;
+
+      // Mostrar resultados
+      document.getElementById('resultados').classList.remove('hidden');
+      document.getElementById('materiales').innerHTML = `
+        <li>🧱 Cemento: <b>${cemento.toFixed(2)}</b> bolsas (${costoCemento.toLocaleString()} $)</li>
+        <li>🏖️ Arena: <b>${arena.toFixed(2)}</b> m³ (${costoArena.toLocaleString()} $)</li>
+        <li>🪨 Grava: <b>${grava.toFixed(2)}</b> m³ (${costoGrava.toLocaleString()} $)</li>
+        <li>💧 Agua: <b>${agua.toFixed(2)}</b> litros (${costoAgua.toLocaleString()} $)</li>
+      `;
+      document.getElementById('costoTotal').innerText = `💰 Costo total estimado: ${costoTotal.toLocaleString()} $`;
+    }
+  </script>
+
+  <footer class="mt-8 text-gray-500 text-sm">
+    © 2025 Calculadora de Concreto | Hecho con ❤️ en Colombia
+  </footer>
+</body>
+</html>
